@@ -16,12 +16,12 @@ class FlickrClient {
         static let base = "https://api.flickr.com/services/rest"
         static let apiKeyParam = "?api_key=\(FlickrClient.apiKey)"
         
-        case getRecentPhotosForLocation(Double, Double)
+        case getRecentPhotosForLocation(Double, Double, Int)
         case getSizes(String)
         
         var stringValue: String {
             switch self {
-            case .getRecentPhotosForLocation(let lat, let lon): return Endpoints.base + Endpoints.apiKeyParam + "&method=flickr.photos.search&lat=\(lat)&lon=\(lon)&per_page=21&format=json&nojsoncallback=?"
+            case .getRecentPhotosForLocation(let lat, let lon, let randomPageNumber): return Endpoints.base + Endpoints.apiKeyParam + "&method=flickr.photos.search&lat=\(lat)&lon=\(lon)&per_page=20&page=\(randomPageNumber)&format=json&nojsoncallback=?"
             case .getSizes(let photoId): return Endpoints.base + Endpoints.apiKeyParam + "&method=flickr.photos.getSizes&photo_id=\(photoId)&format=json&nojsoncallback=?"
             }
         }
@@ -32,7 +32,9 @@ class FlickrClient {
     }
     
     class func getRecentPhotosForLocation(lat: Double, lon: Double, completion: @escaping ([PhotoModel]?, Bool) -> Void) {
-        taskForGETRequest(url: Endpoints.getRecentPhotosForLocation(lat, lon).url, responseType: SearchPhotosResponse.self) { (response, error) in
+        // Let's generate a random page number so that we will always fetch new images. Also as flickr can max give 4000 images, let's generate a number betwen 1 to 200.
+        let randomPageNumber = Int.random(in: 0 ... 200)
+        taskForGETRequest(url: Endpoints.getRecentPhotosForLocation(lat, lon, randomPageNumber).url, responseType: SearchPhotosResponse.self) { (response, error) in
             if let response = response {
                 var photosCount = response.photos.photo.count
                 guard photosCount > 0 else {

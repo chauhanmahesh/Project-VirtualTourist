@@ -81,7 +81,7 @@ class TravelLocationViewController: UIViewController {
     }
     
     @objc func onLongPress(_ recognizer: UIGestureRecognizer) {
-        if(recognizer.state == UIGestureRecognizer.State.began) {
+        if recognizer.state == UIGestureRecognizer.State.began {
             let touchedAt = recognizer.location(in: self.map)
             let coordinate : CLLocationCoordinate2D = map.convert(touchedAt, toCoordinateFrom: self.map)
             let newPin = MKPointAnnotation()

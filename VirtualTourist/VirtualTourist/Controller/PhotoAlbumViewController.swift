@@ -29,6 +29,22 @@ class PhotoAlbumViewController: UIViewController {
     // This variable is required to show the empty images. We can't show the message unless we are sure we don't have images for the pin. So let's wait and set this to true once we have the information.
     var hasImagesInfo: Bool = false
     
+    override func viewDidLoad() {
+        setupMap()
+        
+        newCollectionButton.setTitle("New Collection", for: UIControl.State.normal)
+        
+        checkIfImagesNeedToFetch()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupFetchedResultsController()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        fetchedResultsController = nil
+    }
+       
     @IBAction func onNewCollectionTapped() {
         newCollectionButton.isEnabled = false
         if let objects = fetchedResultsController.sections?[0].objects ?? nil {
@@ -106,28 +122,13 @@ class PhotoAlbumViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        setupMap()
-        
-        newCollectionButton.setTitle("New Collection", for: UIControl.State.normal)
-        
-        checkIfImagesNeedToFetch()
-    }
-    
+   
     func savePhotos(_ photos: [PhotoModel]) {
         totalImagesForPin = photos.count
         newCollectionButton.isEnabled = true
         for photo in photos {
             downloadImageAsyncAndSave(imageToDownload: photo)
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        setupFetchedResultsController()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        fetchedResultsController = nil
     }
     
     func downloadImageAsyncAndSave(imageToDownload: PhotoModel) {
