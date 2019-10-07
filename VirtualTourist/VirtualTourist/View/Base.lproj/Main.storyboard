@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Al7-ue-djx">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -50,8 +50,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JXP-37-J5j">
-                                <rect key="frame" x="0.0" y="302" width="414" height="560"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JXP-37-J5j">
+                                <rect key="frame" x="0.0" y="293" width="414" height="553"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KaL-DV-TrW">
                                     <size key="itemSize" width="128" height="128"/>
@@ -75,6 +75,7 @@
                                                     <rect key="frame" x="54" y="54" width="20" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="color" systemColor="systemRedColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                         </collectionViewCellContentView>
@@ -99,27 +100,29 @@
                                     <outlet property="delegate" destination="GfB-AW-oBd" id="y9s-sR-Jxo"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XbB-uZ-mkk" userLabel="New Collection">
-                                <rect key="frame" x="0.0" y="828" width="414" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XbB-uZ-mkk" userLabel="New Collection">
+                                <rect key="frame" x="184" y="846" width="46" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="RUZ-Tk-ROv"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="onNewCollectionTapped" destination="GfB-AW-oBd" eventType="touchUpInside" id="apX-tH-wI4"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="2Rq-55-5NI" firstAttribute="trailing" secondItem="XbB-uZ-mkk" secondAttribute="trailing" id="6fp-da-TCN"/>
-                            <constraint firstAttribute="bottom" secondItem="XbB-uZ-mkk" secondAttribute="bottom" constant="20" id="8V4-ak-4mF"/>
                             <constraint firstItem="2Rq-55-5NI" firstAttribute="trailing" secondItem="JE2-1a-jR1" secondAttribute="trailing" id="8fU-cu-gjJ"/>
                             <constraint firstItem="JXP-37-J5j" firstAttribute="leading" secondItem="2Rq-55-5NI" secondAttribute="leading" id="DC5-kZ-eMi"/>
-                            <constraint firstItem="XbB-uZ-mkk" firstAttribute="leading" secondItem="2Rq-55-5NI" secondAttribute="leading" id="M6i-gB-iB8"/>
+                            <constraint firstItem="XbB-uZ-mkk" firstAttribute="centerX" secondItem="2Rq-55-5NI" secondAttribute="centerX" id="NUL-FZ-Mnm"/>
                             <constraint firstItem="JE2-1a-jR1" firstAttribute="leading" secondItem="2Rq-55-5NI" secondAttribute="leading" id="TNK-V9-NG5"/>
                             <constraint firstItem="JE2-1a-jR1" firstAttribute="top" secondItem="2Rq-55-5NI" secondAttribute="top" id="WBK-fO-p7U"/>
                             <constraint firstItem="JXP-37-J5j" firstAttribute="top" secondItem="JE2-1a-jR1" secondAttribute="bottom" constant="5" id="a4d-hM-93l"/>
                             <constraint firstItem="2Rq-55-5NI" firstAttribute="trailing" secondItem="JXP-37-J5j" secondAttribute="trailing" id="aut-C3-YvA"/>
-                            <constraint firstItem="JXP-37-J5j" firstAttribute="bottom" secondItem="XbB-uZ-mkk" secondAttribute="top" id="eQq-oH-n46"/>
+                            <constraint firstItem="JXP-37-J5j" firstAttribute="bottom" secondItem="XbB-uZ-mkk" secondAttribute="top" id="j0C-Yp-G8m"/>
+                            <constraint firstAttribute="bottom" secondItem="XbB-uZ-mkk" secondAttribute="bottom" id="uZS-HK-w8w"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2Rq-55-5NI"/>
                     </view>

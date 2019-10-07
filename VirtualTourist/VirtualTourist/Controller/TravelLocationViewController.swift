@@ -94,7 +94,6 @@ class TravelLocationViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? PhotoAlbumViewController {
-            print("Preparing for seque")
             vc.dataController = dataController
             vc.tappedPin = self.selectedPin
         }

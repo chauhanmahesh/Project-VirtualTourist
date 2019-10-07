@@ -72,7 +72,6 @@ class FlickrClient {
     }
     
     @discardableResult class func taskForGETRequest<ResponseType: Decodable>(url: URL, responseType: ResponseType.Type, completion: @escaping (ResponseType?, Bool) -> Void) -> URLSessionTask {
-        print("url : \(url)")
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data else {
                 DispatchQueue.main.async {
@@ -85,7 +84,6 @@ class FlickrClient {
                 let updatedResponse = data
                 let responseObject = try decoder.decode(ResponseType.self, from: data)
                 DispatchQueue.main.async {
-                    print("getSizes updatedResponse : \(responseObject)")
                     completion(responseObject, false)
                 }
             } catch {

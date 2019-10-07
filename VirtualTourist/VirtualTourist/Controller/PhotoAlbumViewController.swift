@@ -26,6 +26,21 @@ class PhotoAlbumViewController: UIViewController {
     
     var totalImagesForPin: Int = 0
     
+    // This variable is required to show the empty images. We can't show the message unless we are sure we don't have images for the pin. So let's wait and set this to true once we have the information.
+    var hasImagesInfo: Bool = false
+    
+    @IBAction func onNewCollectionTapped() {
+        newCollectionButton.isEnabled = false
+        if let objects = fetchedResultsController.sections?[0].objects ?? nil {
+            for object in objects {
+                dataController.viewContext.delete(object as! NSManagedObject)
+                try? dataController.viewContext.save()
+            }
+        }
+        // Now let's try to fetch images again.
+        checkIfImagesNeedToFetch()
+    }
+    
     fileprivate func setupFetchedResultsController() {
         let fetchRequest: NSFetchRequest<Image> = Image.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "photoId", ascending: false)
@@ -63,12 +78,9 @@ class PhotoAlbumViewController: UIViewController {
         return tappedPin.photos?.count ?? 0 > 0
     }
     
-    override func viewDidLoad() {
-        setupMap()
-        
-        newCollectionButton.setTitle("New Collection", for: UIControl.State.normal)
-        
+    fileprivate func checkIfImagesNeedToFetch() {
         if !pinHasPhotos() {
+            newCollectionButton.isEnabled = false
             // Let's not fetch photos again for this location.
             FlickrClient.getRecentPhotosForLocation(lat: tappedPin.latitude, lon: tappedPin.longitude) { photos, isError in
                 guard let photos = photos else {
@@ -81,18 +93,30 @@ class PhotoAlbumViewController: UIViewController {
                     return
                 }
                 
+                self.hasImagesInfo = true
+                // let's collection view reload so that we can show spinner or empty view.
+                self.photosCollectionView.reloadData()
                 // Let's save photos.
                 self.savePhotos(photos)
             }
         } else {
+            hasImagesInfo = true
+            newCollectionButton.isEnabled = true
             totalImagesForPin = tappedPin.photos?.count ?? 0
         }
     }
     
+    override func viewDidLoad() {
+        setupMap()
+        
+        newCollectionButton.setTitle("New Collection", for: UIControl.State.normal)
+        
+        checkIfImagesNeedToFetch()
+    }
+    
     func savePhotos(_ photos: [PhotoModel]) {
         totalImagesForPin = photos.count
-        // Let's reload the collectionview.
-        photosCollectionView.reloadData()
+        newCollectionButton.isEnabled = true
         for photo in photos {
             downloadImageAsyncAndSave(imageToDownload: photo)
         }
@@ -121,23 +145,48 @@ class PhotoAlbumViewController: UIViewController {
         }
     }
     
+    func deleteSelectedImage(_ indexPath: IndexPath) {
+        dataController.viewContext.delete(fetchedResultsController.object(at: indexPath))
+        try? dataController.viewContext.save()
+        totalImagesForPin = totalImagesForPin - 1
+    }
+    
 }
 
 extension PhotoAlbumViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+        if (totalImagesForPin == 0 && hasImagesInfo) {
+            self.photosCollectionView.setEmptyMessage("This pin has no images 😞")
+            newCollectionButton.isEnabled = false
+        } else {
+            newCollectionButton.isEnabled = true
+            self.photosCollectionView.restore()
+        }
+
+        return totalImagesForPin//fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LocationPhotoCollectionViewCell", for: indexPath) as! LocationPhotoViewCell
-        if let data = fetchedResultsController.object(at: indexPath).data {
-            cell.locationPhoto.image = UIImage(data: data)
-            cell.activityIndicator.stopAnimating()
+        
+        // let's check if the image is available or not.
+        if fetchedResultsController.sections?[0].numberOfObjects ?? 0 > indexPath.row {
+            if let data = fetchedResultsController.object(at: indexPath).data {
+                cell.locationPhoto.image = UIImage(data: data)
+                cell.activityIndicator.stopAnimating()
+            }
         } else {
+            // Image is not available yet.
+            cell.locationPhoto.image = nil
             cell.activityIndicator.startAnimating()
         }
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        deleteSelectedImage(indexPath)
     }
     
 }

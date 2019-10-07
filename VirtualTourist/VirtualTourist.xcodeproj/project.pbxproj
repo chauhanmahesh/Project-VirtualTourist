@@ -25,6 +25,7 @@
 		3D374AAC23498C160090EB1C /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D374AAB23498C160090EB1C /* Size.swift */; };
 		3D374AAF234998910090EB1C /* LocationPhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D374AAE234998910090EB1C /* LocationPhotoViewCell.swift */; };
 		3D374AB9234A1EEA0090EB1C /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D374AB8234A1EEA0090EB1C /* PhotoModel.swift */; };
+		3D374ABB234A2D170090EB1C /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D374ABA234A2D170090EB1C /* UICollectionView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		3D374AAB23498C160090EB1C /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		3D374AAE234998910090EB1C /* LocationPhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPhotoViewCell.swift; sourceTree = "<group>"; };
 		3D374AB8234A1EEA0090EB1C /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
+		3D374ABA234A2D170090EB1C /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				3D374A782347610A0090EB1C /* TravelLocationViewController.swift */,
 				3D374A8D234766B10090EB1C /* PhotoAlbumViewController.swift */,
 				3D374AAE234998910090EB1C /* LocationPhotoViewCell.swift */,
+				3D374ABA234A2D170090EB1C /* UICollectionView+Extension.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D374ABB234A2D170090EB1C /* UICollectionView+Extension.swift in Sources */,
 				3D374AAF234998910090EB1C /* LocationPhotoViewCell.swift in Sources */,
 				3D374AA22348798F0090EB1C /* SearchPhotosResponse.swift in Sources */,
 				3D374A9B234784030090EB1C /* UserDefaultsKey.swift in Sources */,
